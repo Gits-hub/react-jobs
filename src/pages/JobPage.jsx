@@ -1,5 +1,6 @@
 import { FaArrowLeft } from "react-icons/fa";
 import { Link, useLoaderData, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const JobPage = ({deleteJob}) => {
@@ -16,6 +17,8 @@ const JobPage = ({deleteJob}) => {
 
         //delete job if confirm is true
         deleteJob(jobId);
+
+        toast.success('Job deleted successfully');
 
         navigate('/jobs');
     }
