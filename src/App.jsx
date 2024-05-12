@@ -8,8 +8,26 @@ import AddJobPage from "./pages/AddJobPage"
 
 const App = () => {
 
-  const addJob = (job) =>{
-    console.log(job)
+  //*Requests
+  //*Post request to add job
+  const addJob = async (job) =>{
+    await fetch('/api/jobs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(job)
+    })
+
+    return;
+  }
+
+  //*Delete request to delete job
+  const deleteJob = async ( id ) => {
+   await fetch(`/api/jobs/${id}`, {
+      method: 'DELETE'
+    })
+    return;
   }
   
   const router = createBrowserRouter(
@@ -17,8 +35,18 @@ const App = () => {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />,
         <Route path="/jobs" element={<JobsPage />} />,
-        <Route path="/jobs/:id" element={<JobPage />} loader={jobLoader} />, //* A dynamic route with a React Data Loader function. 
-        <Route path="/add-job" element={<AddJobPage addJobSubmit={addJob} />}/>
+
+        <Route 
+          path="/jobs/:id" 
+          element={<JobPage deleteJob = { deleteJob } />} 
+          loader={jobLoader} 
+        />, //* A dynamic route with a React Data Loader function. 
+
+        <Route 
+          path="/add-job" 
+          element={<AddJobPage addJobSubmit= { addJob } />}
+        />
+
         <Route path="*" element={<NotFoundPage />}/>
       </Route>
     )

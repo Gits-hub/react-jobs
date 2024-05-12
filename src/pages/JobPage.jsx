@@ -1,10 +1,24 @@
 import { FaArrowLeft } from "react-icons/fa";
-import { Link, useLoaderData } from "react-router-dom"
+import { Link, useLoaderData, useNavigate } from "react-router-dom"
 
 // eslint-disable-next-line react-refresh/only-export-components
-const JobPage = () => {
+const JobPage = ({deleteJob}) => {
 
     const job = useLoaderData();
+    const navigate = useNavigate();
+
+    //delete job
+    const onDeleteClick = (jobId) => {
+        const confirm = window.confirm('Are you sure you want to delete this job?')
+
+        if(!confirm)
+            return;
+
+        //delete job if confirm is true
+        deleteJob(jobId);
+
+        navigate('/jobs');
+    }
 
   return (
     <>
@@ -89,8 +103,8 @@ const JobPage = () => {
                     Edit Job
                 </Link>
               <button
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
-              >
+                onClick={() => onDeleteClick(job.id)}
+                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
                 Delete Job
               </button>
             </div>
