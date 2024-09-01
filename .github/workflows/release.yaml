@@ -23,8 +23,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-      - name: Run npm CI    
-        run: npm ci
+      - name: Install Dependencies    
+        run: npm run install
       - name: Build assets
         run: npm run build
       - name: Release
